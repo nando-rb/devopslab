@@ -11,30 +11,31 @@ python:
   - "3.7.9"                                                                                                                                                                                                         
 
     
-    #addons:
-    # sonarcloud:
-    # organization: nando-rb
-    # token: ${SONAR_TOKEN}    
+addons:
+   sonarcloud:
+     organization: nando-rb
+     token: ${SONAR_TOKEN}    
     
     
 # Instalação de Módulos que são necessários para a Aplicação.                                                                                                                                            
-#install:                                                                                                                                                                                                 
-# - pip install flask flask-wtf coverage 
+install:                                                                                                                                                                                                 
+  - pip install flask flask-wtf coverage 
 
 
 # Defini o script de Teste que deve rodar toda vez que o código for alterado...                                                                                                                            
-#script:                                                                                                                                                                                                  
-# - coverage report app.py || travis_terminate 1;
-# - coverage xml app.py || travis_terminate 1;
-# - sonar-scanner || travis_terminate 1;
+script:
+  - coverage report run.py || travis_terminate 1;    
+  - coverage report app.py || travis_terminate 1;
+  - coverage xml app.py || travis_terminate 1;
+  - sonar-scanner || travis_terminate 1;
 
 # Definir o Deploy no Heroku
 
-    #deploy:
-    #provider: heroku
-    #api_key: $HEROKU_API_KEY
-    #edge: true 
-    # app: devops-nando
-    # strategy: api
-    # on:
-    # branch: main
+deploy:
+  provider: heroku
+  api_key: $HEROKU_API_KEY
+  edge: true 
+  app: devops-nando
+  strategy: api
+  on:
+      branch: main
